@@ -1,26 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <CurrentLocation />
+    <SearchBar />
+    <PlacesTable />
+    <LeafletMap />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import SearchBar from './components/SearchBar.vue'
+import PlacesTable from './components/PlacesTable.vue'
+import CurrentLocation from './components/CurrentLocation.vue';
+import LeafletMap from './components/LeafletMap.vue'
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    SearchBar,
+    PlacesTable,
+    CurrentLocation,
+    LeafletMap
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
