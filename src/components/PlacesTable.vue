@@ -1,5 +1,5 @@
 <template>
-    <table>
+    <table class="table-with-border">
       <thead>
         <tr>
           <th><input type="checkbox" @change="toggleSelectAll"></th>
@@ -65,3 +65,15 @@
   }
   </script>
   
+
+  <style scoped>
+.table-with-border {
+  border-collapse: collapse; /* this allows the borders on the cells to 'collapse' into one */
+}
+
+.table-with-border th, 
+.table-with-border td {
+  border: 1px solid black; /* this applies a border to each table cell */
+  padding: 8px; /* optional: this adds some padding to the inside of each cell */
+}
+</style>

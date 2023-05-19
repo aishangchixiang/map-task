@@ -3,7 +3,7 @@
       style="height: 80vh; width: 100%;" 
       :center="mapCenter" 
       :zoom="13" 
-      :options="{ dragging: true, zoomControl: false }"
+      :options="{ dragging: true, zoomControl: true }"
       @update:center="updateCenter">
       <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
       <l-marker v-for="place in places" :key="place.id" :lat-lng="place.location"></l-marker>

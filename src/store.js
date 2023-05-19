@@ -1,14 +1,27 @@
 import { createStore } from 'vuex'
 import * as moment from 'moment-timezone'
+import config from '../config'
 
 export default createStore({
   state: {
-    currentPlace: {},
+    currentPlace: {
+      id: `0,0`,
+      name: `Lat: 0.0, Lng: 0.0`,
+      location: { 
+        lat: 0, 
+        lng: 0
+      },
+      timezone: 0,
+      localTime: 0
+    },
     places: [],
     mapCenter: { lat: 0, lng: 0 },
     page: 1
   },
   getters: {
+    currentLocation: state => {
+      return state.currentPlace
+    },
     latestPlace: state => {
       return state.places[state.places.length - 1] || null
     },
@@ -40,6 +53,9 @@ export default createStore({
     },
     SET_PAGE(state, newPage) {
       state.page = newPage
+    },
+    SET_CURRENT_PLACE(state, currentPlace){
+      state.currentPlace = currentPlace
     }
   },
   actions: {
@@ -51,7 +67,7 @@ export default createStore({
             const lng = position.coords.longitude
 
             // Use the latitude and longitude to get timezone
-            const response = await fetch(`https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=1331161200&key=AIzaSyCA_zzRd9YSUcNFv-wrUUW6DSWEJCFL7HQ`)
+            const response = await fetch(`https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=1331161200&key=${config.googleApiKey}`)
             const data = await response.json()
 
             const timezone = data.timeZoneId
@@ -64,7 +80,7 @@ export default createStore({
                 timezone,
                 localTime
               }
-
+            context.commit('SET_CURRENT_PLACE', place)
             context.commit('ADD_PLACE', place)
             context.commit('SET_MAP_CENTER', { lat, lng })
         })
@@ -76,7 +92,7 @@ export default createStore({
       // Implement location search API here and commit ADD_PLACE and SET_MAP_CENTER mutations
       // Use Google Places API to search for the location
         // The exact API URL and parameters depend on the specific API you are using
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=AIzaSyCA_zzRd9YSUcNFv-wrUUW6DSWEJCFL7HQ`)
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${config.googleApiKey}`)
         const data = await response.json()
 
         if (data.status === "OK" && data.results && data.results.length > 0) {
@@ -84,7 +100,7 @@ export default createStore({
             const lng = data.results[0].geometry.location.lng
 
             // Use the latitude and longitude to get timezone
-            const timezoneResponse = await fetch(`https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=1331161200&key=AIzaSyCA_zzRd9YSUcNFv-wrUUW6DSWEJCFL7HQ`)
+            const timezoneResponse = await fetch(`https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=1331161200&key=${config.googleApiKey}`)
             const timezoneData = await timezoneResponse.json()
 
             const timezone = timezoneData.timeZoneId

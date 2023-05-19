@@ -1,40 +1,29 @@
 <template>
     <div>
-      <button @click="getCurrentLocation">Get Current Location</button>
-      <input v-model="searchLocation" @keyup.enter="search" />
-      <button @click="search">Search</button>
-      <GoogleMapLoader
-        :map-config="mapConfig"
-        api-key="your-google-api-key"
+      <GoogleMap
+        :center="mapCenter"
+        :zoom="10"
+        api-key="AIzaSyCA_zzRd9YSUcNFv-wrUUW6DSWEJCFL7HQ"
       >
-        <GoogleMapMarker
+        <Marker
           v-for="(m, index) in markers"
           :key="index"
-          :marker="m"
+          :position="m.position"
           :clickable="true"
-          @click="center=m.position"
+          @click="mapCenter=m.position"
         />
-      </GoogleMapLoader>
-      <table>
-        <!-- Add your table rows here -->
-      </table>
-      <button @click="deleteSelected">Delete Selected</button>
+      </GoogleMap>
     </div>
   </template>
   
 <script>
-  import { GoogleMapLoader, GoogleMapMarker } from 'vue3-google-map';
+  import { GoogleMap, Marker } from 'vue3-google-map';
   import { useStore } from 'vuex';
   
   export default {
     components: {
-      GoogleMapLoader,
-      GoogleMapMarker,
-    },
-    data() {
-      return {
-        searchLocation: '',
-      };
+      GoogleMap,
+      Marker,
     },
     computed: {
       store() {
@@ -43,7 +32,7 @@
       markers() {
         return this.store.getters.paginatedPlaces;
       },
-      mapConfig() {
+      mapCenter() {
         return {
           center: this.store.getters.latestPlace?.location || { lat: 0, lng: 0 },
           zoom: 4,
