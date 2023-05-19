@@ -1,4 +1,5 @@
 <template>
+  <button @click="deleteSelected">Delete Selected</button>
     <table class="table-with-border">
       <thead>
         <tr>
@@ -19,7 +20,6 @@
         </tr>
       </tbody>
     </table>
-    <button @click="deleteSelected">Delete Selected</button>
     <button @click="nextPage" :disabled="page >= maxPage">Next Page</button>
     <button @click="previousPage" :disabled="page <= 1">Previous Page</button>
 </template>

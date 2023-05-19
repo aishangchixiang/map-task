@@ -1,13 +1,18 @@
 <template>
+  <div>
     <div>
       <button @click="getCurrentLocation">Get Current Location</button>
-    <h2>Current Location</h2>
-    <p v-if="currentPlace">Name: {{ currentPlace.name }}</p>
-    <p v-if="currentPlace">Latitude: {{ currentPlace.location.lat }}</p>
-    <p v-if="currentPlace">Longitude: {{ currentPlace.location.lng }}</p>
-    <p v-if="currentPlace">Timezone: {{ currentPlace.timezone }}</p>
-    <p v-if="currentPlace">Local Time: {{ currentPlace.localTime }}</p>
+    </div>
+    <div>
+      <h2>Current Location</h2>
+      <p v-if="currentPlace">Name: {{ currentPlace.name }}</p>
+      <p v-if="currentPlace">Latitude: {{ currentPlace.location.lat }}</p>
+      <p v-if="currentPlace">Longitude: {{ currentPlace.location.lng }}</p>
+      <p v-if="currentPlace">Timezone: {{ currentPlace.timezone }}</p>
+      <p v-if="currentPlace">Local Time: {{ currentPlace.localTime }}</p>
+    </div>
   </div>
+    
 </template>
 
 
